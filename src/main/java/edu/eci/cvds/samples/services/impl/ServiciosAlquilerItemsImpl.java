@@ -43,7 +43,11 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
    @Override
    public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+       try{
+           return clienteDAO.loadItemsRentados(idcliente);
+       }catch(PersistenceException ex){
+           throw new ExcepcionServiciosAlquiler("Error al consultar items rentados "+idcliente,ex);
+       }
    }
 
    @Override
