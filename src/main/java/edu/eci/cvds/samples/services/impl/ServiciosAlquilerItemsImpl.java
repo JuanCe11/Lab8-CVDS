@@ -94,7 +94,11 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
    @Override
    public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            clienteDAO.agregarItemRentado(docu, item.getId(), date, sumarDias(date,numdias));
+        }catch(PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar multa",ex);
+        }
    }
 
    @Override
@@ -129,5 +133,12 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
        ServiciosAlquilerFactory hola = ServiciosAlquilerFactory.getInstance();
        hola.getServiciosAlquiler().consultarItem(10);
        System.out.println(hola.getServiciosAlquiler().consultarCliente(3));
+   }
+   
+   private Date sumarDias(Date date,int numdias){
+       	Calendar c = new Calendar();
+        c.setTime(date);
+        c.add(Calendar.DAY_OF_YEAR,numdias);
+        return c.getTime();
    }
 }

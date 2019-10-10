@@ -9,7 +9,6 @@ import edu.eci.cvds.samples.entities.Cliente;
 
 import java.sql.Date;
 import java.util.List;
-import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
 
 /**
@@ -23,4 +22,5 @@ public interface ClienteDAO {
     public List<Cliente> loadClientes() throws PersistenceException;
     public List<ItemRentado> loadItemsRentados(long idcliente) throws PersistenceException;
     public long loadMulta(int iditem, Date fechaDevolucion) throws PersistenceException;
+    public long agregarItemRentado(int id,int idit, Date fechainicio,Date fechafinn) throws PersistenceException;
 }
