@@ -12,6 +12,8 @@ import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
+
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -58,6 +60,15 @@ public class MyBATISClienteDAO implements ClienteDAO{
             throw new PersistenceException("Error al consultar los items rentados",e);
         }
     }
+
+	@Override
+	public long loadMulta(int iditem, Date fechaDevolucion) throws PersistenceException {
+		try {
+			return clienteMapper.consultarMulta(iditem,fechaDevolucion);
+		}catch(org.apache.ibatis.exceptions.PersistenceException e) {
+			throw new PersistenceException("Error al consultar multa",e);
+		}
+	}
     
     
 }

@@ -73,7 +73,4 @@
 	<insert parameterType="map" id="agregarCliente">
 		insert into VI_CLIENTES(documento,nombre,telefono,direccion,email,vetado) values (#{cliente.documento},#{cliente.nombre},#{cliente.telefono},#{cliente.direccion},#{cliente.email},#{cliente.vetado});
 	</insert>
-	<select parameterType="map" id="consultarItems" resultMap="ClienteResult">
-		select * from VI_ITEMRENTADO WHERE CLIENTES_documento=#{idcliente};
-	</select>
 </mapper>

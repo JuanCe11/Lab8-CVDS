@@ -13,8 +13,5 @@
                      resultMap="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper.ItemResult" columnPrefix="i_" ></association>
     </resultMap>
 
-	<!--select parameterType="map" id="consultarMulta" resultMap="ItemRentadoResult">
-		select * from VI_CLIENTE;
-	</select-->
 
 </mapper>

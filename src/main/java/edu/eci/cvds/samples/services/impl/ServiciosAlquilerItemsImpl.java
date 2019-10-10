@@ -75,7 +75,11 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
    @Override
    public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+       try {
+    	   return clienteDAO.loadMulta(iditem,fechaDevolucion);
+       }catch(PersistenceException ex) {
+    	   throw new ExcepcionServiciosAlquiler("Error al consultar multa",ex);
+       }
    }
 
    @Override
