@@ -16,6 +16,7 @@ import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import sun.applet.Main;
 
@@ -95,7 +96,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
    @Override
    public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
         try {
-            clienteDAO.agregarItemRentado(docu, item.getId(), date, sumarDias(date,numdias));
+            clienteDAO.agregarItemRentado(docu, item.getId(), date, (Date) sumarDias(date,numdias));
         }catch(PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar multa",ex);
         }
@@ -135,8 +136,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
        System.out.println(hola.getServiciosAlquiler().consultarCliente(3));
    }
    
-   private Date sumarDias(Date date,int numdias){
-       	Calendar c = new Calendar();
+   private static java.util.Date sumarDias(Date date,int numdias){
+       	Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(Calendar.DAY_OF_YEAR,numdias);
         return c.getTime();
