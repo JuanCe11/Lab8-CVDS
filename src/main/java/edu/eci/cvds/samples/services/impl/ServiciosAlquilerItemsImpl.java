@@ -144,11 +144,11 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
    }
    
-   /*public static void main(String[] args) throws ExcepcionServiciosAlquiler{
+   public static void main(String[] args) throws ExcepcionServiciosAlquiler{
        ServiciosAlquilerFactory hola = ServiciosAlquilerFactory.getInstance();
        //hola.getServiciosAlquiler().consultarItem(10);
-       System.out.println(hola.getServiciosAlquiler().consultarCliente(3));
-   }*/
+       System.out.println(hola.getServiciosAlquiler().consultarClientes());
+   }
    
    private static java.util.Date sumarDias(Date date,int numdias){
        	Calendar c = Calendar.getInstance();

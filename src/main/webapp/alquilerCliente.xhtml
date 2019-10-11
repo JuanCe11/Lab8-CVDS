@@ -1,16 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3c.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:p="http://primefaces.org/ui" 
-        xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head> 
-
-<title> Alquiler Clientes </title>
-<link rel="stylesheet" type="text/css" href="styleClient.css" />
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+        
+<h:head>
+<h:title>AlquilerClientes</h:title>
 </h:head>
 
 <h:body>
-	<p:dataTable var="cliente" value="#{}"
-
+	<h:form id="FormularioCliente">
+		<p:dataTable var="ClientesRegistrados" value="#{AlquilerItemBean.consultarClientes()}" paginator="true" 
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rows="10" selectionMode="single" id="documento" selection="#{AlquilerItemsBean.selectedCliente}"
+                     rowKey="#{ClientesRegistrados.documento}">
+			<f:facet name="ClientesRegistrados"></f:facet>
+			<p:column headerText="Documento">
+				<h:outputText value="#{ClientesRegistrados.documento}"/>
+			</p:column>
+			<p:column headerText="Nombre" >
+                <h:outputText value="#{ClientesRegistrados.nombre}" />
+            </p:column>
+            <p:column headerText="Telefono">
+                <h:outputText value="#{ClientesRegistrados.telefono}" />
+            </p:column>
+            <p:column headerText="Direccion">
+                <h:outputText value="#{ClientesRegistrados.direccion}" />
+            </p:column>
+            <p:column headerText="Email">
+                <h:outputText value="#{ClientesRegistrados.email}" />
+            </p:column>
+            <p:column headerText="Vetado">
+                <h:outputText value="#{ClientesRegistrados.vetado}" />
+            </p:column>
+		</p:dataTable>
+		
+	</h:form>
 </h:body>
+    
+</html>

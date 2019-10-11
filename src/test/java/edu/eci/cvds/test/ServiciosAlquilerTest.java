@@ -82,7 +82,7 @@ public class ServiciosAlquilerTest {
     	try {
     		serviciosAlquiler.consultarMultaAlquiler(20, new Date(2019,10,11));
     	}catch(Exception e) {
-    		e.getMessage();
+    		e.printStackTrace();
     	}
     }
 /*
