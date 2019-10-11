@@ -67,6 +67,24 @@ public class ServiciosAlquilerTest {
             System.out.println(e.getMessage());
         }
     }
+    
+    @Test
+    public void deberiaObtenerItemsNoRegresados() {
+    	try {
+    		serviciosAlquiler.consultarItemsCliente(4);
+    	}catch(Exception e) {
+    		e.getMessage();
+    	}
+    }
+    
+    @Test
+    public void deberiaCalcularLaMulta() {
+    	try {
+    		serviciosAlquiler.consultarMultaAlquiler(20, new Date(2019,10,11));
+    	}catch(Exception e) {
+    		e.getMessage();
+    	}
+    }
 /*
     @Test
     public void emptyDB() {

@@ -39,7 +39,5 @@ public interface ClienteMapper {
     public void agregarCliente(@Param("cliente") Cliente cliente);
     
     public List<ItemRentado> consultarItems(@Param("idcliente") long idcliente);
-
-	public long consultarMulta(@Param("iditem")int iditem,@Param("fechaDevolucion") Date fechaDevolucion);
 	
 }

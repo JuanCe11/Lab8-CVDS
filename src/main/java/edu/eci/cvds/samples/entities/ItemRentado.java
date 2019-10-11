@@ -15,7 +15,6 @@ import java.sql.Date;
 public class ItemRentado implements Serializable {
 
     private int id;
-
     private Item item;
     private Date fechainiciorenta;
     private Date fechafinrenta;

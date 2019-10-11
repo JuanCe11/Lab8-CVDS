@@ -16,6 +16,9 @@ import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import sun.applet.Main;
@@ -76,11 +79,22 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
    @Override
    public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
-       try {
-    	   return clienteDAO.loadMulta(iditem,fechaDevolucion);
-       }catch(PersistenceException ex) {
-    	   throw new ExcepcionServiciosAlquiler("Error al consultar multa",ex);
+	   List<Cliente> clientes = consultarClientes();
+       for (Cliente cliente:clientes) {
+           ArrayList<ItemRentado> rentados = cliente.getRentados();
+           for (ItemRentado item :rentados) {
+               if( item.getItem().getId()==iditem) {
+                   LocalDate fechaFin=item.getFechafinrenta().toLocalDate();
+                   LocalDate fechaEntrego=fechaDevolucion.toLocalDate();
+                   long diasRetraso = ChronoUnit.DAYS.between(fechaFin, fechaEntrego);
+                   if(diasRetraso<0){
+                       return 0;
+                   }
+                   return diasRetraso*valorMultaRetrasoxDia(item.getItem().getId());
+               }
+           }
        }
+       return 0;
    }
 
    @Override
@@ -130,11 +144,11 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
    }
    
-   public static void main(String[] args) throws ExcepcionServiciosAlquiler{
+   /*public static void main(String[] args) throws ExcepcionServiciosAlquiler{
        ServiciosAlquilerFactory hola = ServiciosAlquilerFactory.getInstance();
-       hola.getServiciosAlquiler().consultarItem(10);
+       //hola.getServiciosAlquiler().consultarItem(10);
        System.out.println(hola.getServiciosAlquiler().consultarCliente(3));
-   }
+   }*/
    
    private static java.util.Date sumarDias(Date date,int numdias){
        	Calendar c = Calendar.getInstance();

@@ -60,15 +60,6 @@ public class MyBATISClienteDAO implements ClienteDAO{
         }
     }
 
-	@Override
-	public long loadMulta(int iditem, Date fechaDevolucion) throws PersistenceException {
-		try {
-			return clienteMapper.consultarMulta(iditem,fechaDevolucion);
-		}catch(org.apache.ibatis.exceptions.PersistenceException e) {
-			throw new PersistenceException("Error al consultar multa",e);
-		}
-	}
-
     @Override
     public long agregarItemRentado(long id, int idit, Date fechainicio, Date fechafinn) throws PersistenceException {
         try {
