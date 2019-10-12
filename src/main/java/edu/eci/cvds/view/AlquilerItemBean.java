@@ -1,7 +1,6 @@
 package edu.eci.cvds.view;
 
 import edu.eci.cvds.samples.entities.Item;
-import edu.eci.cvds.sampleprj.dao.PersistenceException;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
@@ -16,67 +15,85 @@ import java.util.List;
 
 import java.sql.Date;
 
+
+
 @ManagedBean(name="AlquilerItemsBean")
 @ApplicationScoped
-public class AlquilerItemBean extends BasePageBean{
-	
+public class AlquilerItemBean extends BasePageBean {
+
 	@Inject
 	private ServiciosAlquiler serviciosAlquiler;
 	private Cliente selectedCliente;
-	
+	private long costo;
 	public List<Cliente> consultarClientes(){
-		try {
-			return serviciosAlquiler.consultarClientes();
+		List<Cliente> clientes = null;
+		try{
+			clientes=serviciosAlquiler.consultarClientes();
 		} catch (ExcepcionServiciosAlquiler e) {
-			return null;
+			setErrorMessage(e);
 		}
+		return clientes;
 	}
-	
-	public Cliente consultarCliente(long documento) {
+	public Cliente consultarCliente(long documento){
+		Cliente cliente=null;
 		try {
-			return serviciosAlquiler.consultarCliente(documento);
-		} catch (ExcepcionServiciosAlquiler e) {
-			return null;
+			cliente=serviciosAlquiler.consultarCliente(documento);
+		} catch (Exception e) {
+			setErrorMessage(e);
 		}
+		return cliente;
 	}
-	
 	public void registrarCliente(long doc,String nombre,String telefono, String direccion,String mail){
-        try{
-            serviciosAlquiler.registrarCliente(new Cliente(nombre,doc,telefono,direccion,mail));
-        } catch (Exception e) {}
-    }
-	
+		try{
+			serviciosAlquiler.registrarCliente(new Cliente(nombre,doc,telefono,direccion,mail));
+		} catch (Exception e) {
+			setErrorMessage(e);
+		}
+	}
+
 	public void setSelectedCliente(Cliente cliente){this.selectedCliente = cliente;}
 
-    public Cliente getSelectedCliente(){
-        return selectedCliente;
-    }
-	
-	
+	public Cliente getSelectedCliente(){
+		return selectedCliente;
+	}
+
+
 	public long consultarMulta(Item it) {
+		long multa = 0;
 		try{
-			return serviciosAlquiler.consultarMultaAlquiler(it.getId(),new Date(System.currentTimeMillis()));
+			multa= serviciosAlquiler.consultarMultaAlquiler(it.getId(),new Date(System.currentTimeMillis()));
 		}
 		catch(ExcepcionServiciosAlquiler e){
-            return -1;
-        }
-    }
-	
-	
+			setErrorMessage(e);
+		}
+		return multa;
+	}
+
+
 	public void registrarAlquilerCliente(int id,int numDiasAlquilar){
-        try{
-            Item item = serviciosAlquiler.consultarItem(id);
-            serviciosAlquiler.registrarAlquilerCliente(new Date(System.currentTimeMillis()),selectedCliente.getDocumento(),item,numDiasAlquilar);
-        }catch(ExcepcionServiciosAlquiler e){}
-    }
-	
-	public long consultarCosto(int id, int numDiasAlquilar){
-        try {
-            return serviciosAlquiler.consultarCostoAlquiler(id, numDiasAlquilar);
-        } catch (ExcepcionServiciosAlquiler e){
-            return -1;
-        }
-    }
-	
-	
+		try{
+			Item item = serviciosAlquiler.consultarItem(id);
+			serviciosAlquiler.registrarAlquilerCliente(new Date(System.currentTimeMillis()),selectedCliente.getDocumento(),item,numDiasAlquilar);
+		}catch(ExcepcionServiciosAlquiler e){
+			setErrorMessage(e);
+		}
+	}
+
+	public void consultarCosto(int id, int numDiasAlquilar){
+		try {
+			costo = serviciosAlquiler.consultarCostoAlquiler(id, numDiasAlquilar);
+		} catch (ExcepcionServiciosAlquiler e){
+			setErrorMessage(e);
+		}
+	}
+
+	public long getCosto(){
+		return costo;
+	}
+
+	private void setErrorMessage(Exception e){
+		String message = e.getMessage();
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
+	}
 }

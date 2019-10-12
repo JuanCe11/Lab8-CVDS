@@ -80,7 +80,10 @@ public class ServiciosAlquilerTest {
     @Test
     public void deberiaCalcularLaMulta() {
     	try {
-    		serviciosAlquiler.consultarMultaAlquiler(20, new Date(2019,10,11));
+    		TipoItem ti = new TipoItem(1,"Deportes");
+    		Date fecha =  new Date(2019,10,11);
+    		Item it = new Item(ti, 1, "Item1", "Primer Item", fecha, 20000, "", "Masculino");
+    		System.out.println(serviciosAlquiler.consultarMultaAlquiler(1, new Date(2019,10,11)));
     	}catch(Exception e) {
     		e.printStackTrace();
     	}
